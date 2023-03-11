@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="admin/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Book List</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+</head>
+<body>
+
+	<section>
+		<div class="container mt-4">
+			<div class="row">
+				<div class="col-md-8 offset-2">
+					<div class="d-flex justify-content-end mb-2">
+						<a th:href="add" class="btn btn-sm btn-primary">Add Book</a>
+					</div>
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<thead class="table-dark">
+								<tr>
+									<th>Name</th>
+									<th>Title</th>
+									<th>Description</th>
+									<th>Version No</th>
+									<!-- <th>Category</th>  -->
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="b:${book}">
+									<td th:text="${b.book_name}"></td>
+									<td th:text="${b.title}"></td>
+									<td th:text="${b.description}"></td>
+									<td th:text="${b.version_no}"></td>
+									<!-- <td th:text="${b.categories[0].category_name}"></td>  -->
+									 <!--  <span th:each="cate: ${b.categories}">
+									<td th:text="${cate.category_name}"></td> </span> -->
+									<td><a
+										th:href="@{book_edit/{book_id}(book_id=${b.book_id})}"
+										class="btn btn-sm btn-primary">Edit</a> <a
+										th:href="@{book_delete/{book_id}(book_id=${b.book_id})}"
+										class="btn btn-sm btn-danger">Delete</a></td>
+								</tr>
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html th:replace="admin/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<section>
+		<div class="container mt-4">
+			<div class="row">
+				<div class="col-md-6 offset-3">
+					<div class="card">
+						<div class="card-body">
+							<h4>Author add</h4>
+							<form th:action="@{author_save}" method="post">
+								<div>
+									<label class="form-label">Author Name: </label> <input
+										type="text" class="form-control" name="authorName" />
+								</div>
+								<div>
+									<label class="form-label">Author Address</label>
+									<input type="text" class="form-control" name="authorAddress" />
+								</div>
+								<div class="text-center">
+									<button class="btn btn-primary mt-3 text-center" type="submit">Add</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>

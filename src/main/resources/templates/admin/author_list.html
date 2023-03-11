@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html th:replace="admin/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<section>
+		<div class="container mt-4">
+			<div class="row">
+				<div class="col-md-6 offset-3">
+					<div class="d-flex justify-content-end mb-2">
+						<a th:href="author_add" class="btn btn-sm btn-primary">Add
+							Author</a>
+					</div>
+					<table class="table table-striped">
+						<thead class="table table-dark">
+							<tr>
+								<th>Name</th>
+								<th>Address</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="auth:${author}">
+								<td th:text="${auth.authorName}"></td>
+								<td th:text="${auth.authorAddress}"></td>
+								<td>
+									<a th:href="@{author_edit/{id}(id=${auth.authorId})}" class="btn btn-sm btn-success">Edit</a> 
+									<a th:href="@{author_delete/{authorId}(authorId= ${auth.authorId})}" class="btn btn-sm btn-danger">Delete</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>
