@@ -34,9 +34,7 @@ public class CategoryController {
 	@ModelAttribute
 	public void addCommonData(Model m, Principal principal) {
 		String username = principal.getName();
-		System.out.println("username :::::::::::::::" + username);
 		User user = userRepo.getUserByUserName(username);
-		System.out.println("user :::::::::::::::" + user);
 		m.addAttribute("user", user);
 	}
 
@@ -58,7 +56,6 @@ public class CategoryController {
 		model.addAttribute("category", category);
 
 		return "admin/category_list";
-
 	}
 
 	@GetMapping("/category_add")
@@ -98,47 +95,4 @@ public class CategoryController {
 		return "redirect:/admin/category";
 	}
 
-	/*
-	 * 
-	 * @Autowired CategoryService service;
-	 * 
-	 * @GetMapping("/category") public String categoryList(Model model) {
-	 * 
-	 * List<Category> category = this.service.getAllCategory();
-	 * model.addAttribute("category",category);
-	 * 
-	 * return "category_list";
-	 * 
-	 * }
-	 * 
-	 * @GetMapping("/category_add") public String categoryAdd() { return
-	 * "category_add"; }
-	 * 
-	 * @PostMapping("/category_save") public String
-	 * saveCategory(@ModelAttribute("category") Category category) {
-	 * 
-	 * this.service.saveCategory(category);
-	 * 
-	 * return "redirect:/admin/category"; }
-	 * 
-	 * @GetMapping("/category_edit/{id}") public String editCategory(@PathVariable
-	 * int id, Model model) {
-	 * 
-	 * Category category = service.getCategoryById(id);
-	 * model.addAttribute("category",category);
-	 * 
-	 * return "category_edit"; }
-	 * 
-	 * @PostMapping("/category_update") public String updateCategory(@ModelAttribute
-	 * Category user) {
-	 * 
-	 * service.saveCategory(user);
-	 * 
-	 * return "redirect:/admin/category"; }
-	 * 
-	 * @GetMapping("/category_delete/{id}") public String
-	 * deleteCategory(@PathVariable int id) { service.deleteCategoryById(id);
-	 * 
-	 * return "redirect:/admin/category"; }
-	 */
 }

@@ -27,51 +27,52 @@ import com.library.serviceImpl.UserServiceImpl;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-//@RequestMapping("/user")
 public class UserController {
 
-	/*
 	@Autowired
-	UserServiceImpl service;
+	UserRepo userRepo;
+	
+	@Autowired
+	UserService userService;
 	
 	@Autowired
 	BookService bookService;
-	
-	@Autowired
-	PasswordEncoder encoder;
 
-	@GetMapping("/dashboard")
-	public String Home() {
+	@ModelAttribute
+	public void addCommonData(Model m, Principal principal) {
+		String username = principal.getName();
+		System.out.println("username :::::::::::::::" + username);
+		User user = userRepo.getUserByUserName(username);
+		System.out.println("user :::::::::::::::" + user.getName());
+		m.addAttribute("user", user);
+	}
+
+	@GetMapping("/user/dashboard")
+	public String UserDashboard(Model model) {
 		
-//		List<Book> book  = bookService.getAllBooks();
-//		model.addAttribute("book", book);
+		List<Book> books = bookService.getAllBooks();
+		
+		model.addAttribute("books",books);
 		
 		return "normal/user_dashboard";
 	}
 	
-	@GetMapping("/edit/{user_id}")
-	public String edit(@PathVariable int user_id, Model m) {
-		User user = service.getUserById(user_id);
-		m.addAttribute("ur",user);		
-		
-		return "Edit";
-	}
 	
-	@PostMapping("/update")
-	public String updateUser(@ModelAttribute User user) {
-		
-		service.userSave(user);
-		
-		return "redirect:/";
+	// user details api admin
+
+	@GetMapping("/admin/users")
+	public String userList(Model model) {
+		List<User> user = userService.getAllUser();
+		model.addAttribute("users", user);
+		return "admin/user_list";
 	}
-//	
-//	@GetMapping("/delete/{user_id}")
-//	public String deleteUser(@PathVariable int user_id) {
-//		
-//		service.deleteUserById(user_id);
-//		
-//		return "redirect:/";
-//	}
-	
-	*/
+
+	@GetMapping("/admin/user_delete/{user_id}")
+	public String deleteUser(@PathVariable("user_id") int user_id) {
+
+		userService.deleteUserById(user_id);
+
+		return "redirect:/admin/users";
+	}
+
 }

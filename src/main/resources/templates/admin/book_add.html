@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/base::layout(~{::section})">
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{admin/base::layout(~{::section})}">
 <head>
 <meta charset="ISO-8859-1">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -25,16 +26,25 @@
 
 							<h4 class="text-center">Book Add</h4>
 
-							<form action="#" th:action="@{book_save}" method="post" th:object="${books}">
-								<!-- enctype="multipart/form-data" -->
+							<form action="#" th:action="@{/admin/book_save}" method="post"
+								th:object="${book}" enctype="multipart/form-data" >
+								<!--   -->
+								
 								<div>
-									<label for="book_name" class="form-label">Book Name:</label> <input type="text"
-										name ="book_name" class="form-control" />
+									<label for="book_name" class="form-label">Book Name:</label> <input
+										type="text" th:field="*{book_name}" class="form-control" />
+								</div>
+								<div>
+									<label class="form-label">Author Name: </label> <select
+										class="form-control" th:field="*{authors}">
+										<option th:each="author: ${authors}"
+											th:value="${author.authorId}" th:text="${author.authorName}"></option>
+									</select>
 								</div>
 								<div>
 									<label class="form-label">Category Name:</label>
 									<!-- <input type="text" name="category_name" class="form-control" />  -->
-									<select  class="form-control">
+									<select class="form-control" th:field="*{categories}">
 										<option th:each="cat:${category}" th:value="${cat.cat_id}"
 											th:text="${cat.category_name}"></option>
 									</select>
@@ -50,10 +60,10 @@
 										type="text" name="version_no" class="form-control" />
 								</div>
 
-								<!-- <div>
-								<label class="form-label">Image: </label>
-								<input type="file" name="photos" class="form-control" />
-							</div> -->
+								<div>
+									<label class="form-label">Image: </label> <input type="file"
+										name="photo" class="form-control" />
+								</div> 
 
 								<div class="text-center">
 									<button type="submit" class="btn btn-primary mt-3 text-center">Add

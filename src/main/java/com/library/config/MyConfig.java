@@ -57,7 +57,7 @@ public class MyConfig{
 		.permitAll().and().formLogin()
 		.loginPage("/signin")
 		.loginProcessingUrl("/dosignin")
-		.defaultSuccessUrl("/")
+		.defaultSuccessUrl("/admin/dashboard")
 //		.and()
 //		.sessionManagement()
 //		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

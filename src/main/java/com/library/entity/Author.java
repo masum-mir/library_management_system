@@ -15,22 +15,20 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="authors")
-public class Author extends BaseModel{
-	
+@Table(name = "authors")
+public class Author extends BaseModel {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long authorId;
 	private String authorName;
 	private String authorAddress;
-	
-	/*
-	 * @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,
-	 * CascadeType.MERGE}, mappedBy = "authors")
-	 * 
-	 * @JsonIgnore private Set<Book> books = new HashSet<>();
-	 */
 
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "authors")
+	@JsonIgnore
+	private Set<Book> books = new HashSet<>();
+
+	
 	public long getAuthorId() {
 		return authorId;
 	}
@@ -54,11 +52,5 @@ public class Author extends BaseModel{
 	public void setAuthorAddress(String authorAddress) {
 		this.authorAddress = authorAddress;
 	}
-	/*
-	 * public Set<Book> getBooks() { return books; }
-	 * 
-	 * public void setBooks(Set<Book> books) { this.books = books; }
-	 */
-	
-	
+
 }

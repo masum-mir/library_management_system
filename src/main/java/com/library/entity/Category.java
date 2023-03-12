@@ -37,6 +37,7 @@ public class Category extends BaseModel{
 	
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "categories")
+	@JsonIgnore
 	private Set<Book> books = new HashSet<Book>();
 
 	public Category(String category_name) {

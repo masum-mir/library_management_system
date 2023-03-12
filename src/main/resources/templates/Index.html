@@ -18,61 +18,8 @@
 		<th:block th:text="${#session.removeAttribute('msg')}"></th:block>
 	</div>
 
-	<!-- 	<div class="container">
-		<div class="card">
-			<div class="card-body">
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th scope="col">Id</th>
-							<th scope="col">Name</th>
-							<th scope="col">Mobile</th>
-							<th scope="col">Email</th>
-							<th scope="col">Password</th>
-							<th scope="col">Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="e: ${user}">
-							<th th:text="${e.user_id}"></th>
-							<td th:text="${e.name}"></td>
-							<td th:text="${e.mobile}"></td>
-							<td th:text="${e.email}"></td>
-							<td th:text="${e.password}"></td>
-							<td><a class="btn btn-sm btn-primary"
-								th:href="@{/edit/{user_id}(user_id=${e.user_id})}">Edit</a> <a
-								class="btn btn-sm btn-danger"
-								th:href="@{/delete/{user_id}(user_id=${e.user_id})}">Delete</a></td>
-						</tr>
 
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-
- -->
-
-
-	<!-- 	<div class="container mt-3">
-		<div class="row">
-			<div class="col-4" th:each="b: ${book}">
-				<div class="card">
-					<div class="card-img-top">
-						<p class="text-center">img</p>
-					</div>
-					<div class="card-body">
-						<h5 th:text="${b.book_name}"></h5>
-						<p th:text="${b.title}"></p>
-						<p th:text="${b.version_no}"></p>
-						<button class="btn btn-sm btn-primary">Request</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> -->
-
-	<section style="background-color: #eee">
+<!-- 	<section style="background-color: #eee">
 		<div class="container py-2">
 			<div class="row justify-content-center">
 				<div class="col-4" th:each="b: ${book}">
@@ -95,7 +42,7 @@
 			</div>
 		</div>
 
-	</section>
+	</section> -->
 
 </body>
 </html>

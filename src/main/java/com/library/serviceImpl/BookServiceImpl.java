@@ -1,13 +1,24 @@
 package com.library.serviceImpl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.library.dto.BookDto;
 import com.library.entity.Book;
@@ -30,12 +41,12 @@ public class BookServiceImpl implements BookService{
 	ModelMapper modelMapper;
 	
 	@Override
-	public List<BookDto> getAllBooks() {
+	public List<Book> getAllBooks() {
 		
 		List<Book> books = bookRepo.findAll();
-		List<BookDto> bookDto = books.stream().map(e -> this.modelMapper.map(e, BookDto.class)).collect(Collectors.toList());
+//		List<BookDto> bookDto = books.stream().map(e -> this.modelMapper.map(e, BookDto.class)).collect(Collectors.toList());
 		
-		return bookDto;
+		return books;
 	}
 
 	@Override
@@ -48,14 +59,9 @@ public class BookServiceImpl implements BookService{
 
 
 	@Override
-	public BookDto saveBook(BookDto bookDto) {
-//		int i = Integer.parseInt(id);
-//		Category category = categoryRepo.findById(i).orElseThrow(() -> new UsernameNotFoundException("Category not found :: "+id));
-		Book book = this.modelMapper.map(bookDto, Book.class);
-//		book.setCategories(category);
-		Book bookSave = this.bookRepo.save(book); 
+	public Book saveBook(Book book) {
 		
-		return this.modelMapper.map(bookSave, BookDto.class);
+		return this.bookRepo.save(book);
 	}
 
 	@Override
@@ -78,6 +84,63 @@ public class BookServiceImpl implements BookService{
 		BookDto updateBookDto = this.modelMapper.map(updateBook, BookDto.class);
 		
 		return updateBookDto;
+	}
+	
+	@Override
+	public List<Book> searchBooks(String keyword) {
+		
+//		if(keyword != null) {
+//			return this.bookRepo.search(keyword);
+//		}
+		
+		return bookRepo.findAll();
+	}
+	
+	
+	// upload image ...!!!
+	@Override
+	public String uploadImage(String path, MultipartFile file) {
+		
+		// file name
+		String fileName = file.getOriginalFilename();
+		
+		String randomId = UUID.randomUUID().toString();
+		String randomName = randomId.concat(fileName.substring(fileName.lastIndexOf(".")));
+		
+		// full path
+		String filePath = path + File.separator + randomName;
+		
+		File f = new File(path);
+		
+		if(!f.exists()) {
+			f.mkdir();
+		}
+		
+		// files copy
+		try {
+			Files.copy(file.getInputStream(), Paths.get(filePath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return fileName;
+	}
+	
+	
+	// serve image ...!!!
+	
+	public InputStream getResource(String path, String fileName) {
+		
+		String fullPath = path + File.separator + fileName;
+		
+		InputStream inputStream = null;
+		try {
+			inputStream = new FileInputStream(fullPath);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return inputStream;
 	}
 
 }

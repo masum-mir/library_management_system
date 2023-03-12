@@ -19,23 +19,20 @@ body {
 	<section>
 		<div class="container py-2">
 			<div class="row">
-				<div class="col-4" th:each="b: ${book}">
+				<div class="col-3" th:each="b: ${book}">
 					<div class="card text-black mb-2">
 						<div class="">
-							<img class="w-100" alt="this is a image"
-								src="https://imageio.forbes.com/specials-images/imageserve/5e6e26d9aa5428000759e96c/women-washing-purple-water-lilies-in-Vietnam/0x0.jpg?format=jpg&crop=960,842,x0,y112,safe&width=960">
+							<img class="w-100" alt="image" src="${b.photos}"> 
 							<a href="#!">
-								<div>
-									<div class="mask"
-										style="background-color: rgba(251, 251, 251, 0.15);"></div>
-								</div>
+								<div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
 							</a>
 						</div>
 						<div class="card-body">
 							<div class="text-center">
 								<h5 class="card-title" th:text="${b.book_name}"></h5>
-								<p class="text-muted mb-4" th:text="${b.title}">muted text</p>
-								<button class="btn btn-sm btn-success">Request Book</button>
+								<span class="text-muted mb-4" th:each="auth:${b.authors}">
+									<p th:text="${auth.authorName}"></p>
+								</span> <a class="btn btn-sm btn-success">Request Book</a>
 							</div>
 						</div>
 					</div>

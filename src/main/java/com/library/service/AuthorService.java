@@ -12,6 +12,4 @@ public interface AuthorService {
 	public Author updateAuthor(Author author);
 	public void deleteAuthor(long id);
 	
-	
-
 }

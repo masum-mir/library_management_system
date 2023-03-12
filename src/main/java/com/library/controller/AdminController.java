@@ -10,6 +10,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,6 +39,9 @@ import com.library.service.UserService;
 @RequestMapping("/admin")
 public class AdminController {
 
+	@Value("${project.image}")
+	private String path;
+	
 	@Autowired
 	UserRepo userRepo;
 
@@ -66,7 +70,13 @@ public class AdminController {
 	
 	@GetMapping("/dashboard")
 	public String Home(Model m, Principal principal) {
-		List<BookDto> book = bookservice.getAllBooks();
+		List<Book> book = bookservice.getAllBooks();
+		
+		System.out.println("Books:::::::::::: "+ book.toString());
+		
+		String str = path;
+		System.out.println("str ::::::::::::::::::::::::: " + str);
+		
 		m.addAttribute("book",book);
 		return "admin/admin_dashboard";
 	}
@@ -75,29 +85,7 @@ public class AdminController {
 	public String newAbout() {
 
 		return "NewFile";
-	}
+	}	
 
-	
-
-
-	
-
-	
-	// user details api
-	
-	@GetMapping("/users")
-	public String userList(Model model) {
-		List<User> user = userService.getAllUser();
-		model.addAttribute("users",user);
-		return "admin/user_list";
-	}
-	
-	@GetMapping("/user_delete/{user_id}")
-	public String deleteUser(@PathVariable("user_id") int user_id) {
-		
-		userService.deleteUserById(user_id);
-		
-		return "redirect:/admin/users";
-	}
 
 }
