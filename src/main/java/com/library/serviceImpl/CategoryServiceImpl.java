@@ -38,19 +38,19 @@ public class CategoryServiceImpl implements CategoryService{
 	@Override
 	public CategoryDto getCategoryById(int id) {
 		
-		Category c = categoryRepo.findById(id).orElseThrow(() -> new UsernameNotFoundException("Category not found :" +id));
+		Category category = categoryRepo.findById(id).orElseThrow(() -> new UsernameNotFoundException("Category not found :" +id));
 		/*
 		 * if(c.isPresent()) { return c.get(); }
 		 */
 
-		return this.modelMapper.map(c, CategoryDto.class);
+		return this.modelMapper.map(category, CategoryDto.class);
 	}
 
 	@Override
-	public CategoryDto saveCategory(CategoryDto category) {
+	public CategoryDto saveCategory(CategoryDto categoryDto) {
 		
-		Category cat = this.modelMapper.map(category, Category.class);
-		Category saveCategory = categoryRepo.save(cat);
+		Category category = this.modelMapper.map(categoryDto, Category.class);
+		Category saveCategory = categoryRepo.save(category);
 		
 		return this.modelMapper.map(saveCategory, CategoryDto.class);
 	}
@@ -61,9 +61,16 @@ public class CategoryServiceImpl implements CategoryService{
 	}
 
 	@Override
-	public Category updateCategory(CategoryDto category, int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public CategoryDto updateCategory(CategoryDto categoryDto, int id) {
+		
+		Category category = categoryRepo.findById(id).orElseThrow(()-> new UsernameNotFoundException("Category Id not found :: "+id));
+		
+		category.setCategory_name(categoryDto.getCategory_name());
+		
+		Category saveCategory = categoryRepo.save(category);
+		CategoryDto saveCategoryDto = this.modelMapper.map(saveCategory, CategoryDto.class);
+		
+		return saveCategoryDto;
 	}
 
 }

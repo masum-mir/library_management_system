@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.library.dto.BookDto;
 import com.library.entity.Book;
 import com.library.entity.User;
 import com.library.repositories.UserRepo;
@@ -41,20 +42,24 @@ public class UserController {
 	@ModelAttribute
 	public void addCommonData(Model m, Principal principal) {
 		String username = principal.getName();
-		System.out.println("username :::::::::::::::" + username);
 		User user = userRepo.getUserByUserName(username);
-		System.out.println("user :::::::::::::::" + user.getName());
 		m.addAttribute("user", user);
 	}
 
 	@GetMapping("/user/dashboard")
-	public String UserDashboard(Model model) {
+	public String userDashboard(Model model) {
 		
 		List<Book> books = bookService.getAllBooks();
 		
 		model.addAttribute("books",books);
 		
 		return "normal/user_dashboard";
+	}
+	
+	@GetMapping("/user/book_details")
+	public String bookDetails() {
+		
+		return "normal/book_details";
 	}
 	
 	

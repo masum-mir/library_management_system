@@ -9,6 +9,7 @@ public class BookDto {
 	private String description;
 	private String photos;
 	private CategoryDto categories;
+	private AuthorDto authors;
 
 	public int getBook_id() {
 		return book_id;
@@ -65,5 +66,14 @@ public class BookDto {
 	public void setPhotos(String photos) {
 		this.photos = photos;
 	}
+
+	public AuthorDto getAuthors() {
+		return authors;
+	}
+
+	public void setAuthors(AuthorDto authors) {
+		this.authors = authors;
+	}
+	
 
 }

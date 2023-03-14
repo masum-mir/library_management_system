@@ -64,9 +64,9 @@ public class CategoryController {
 	}
 
 	@PostMapping("/category_save")
-	public String saveCategory(@ModelAttribute("category") CategoryDto category) {
+	public String saveCategory(@ModelAttribute("category") CategoryDto categoryDto) {
 
-		this.categoryService.saveCategory(category);
+		this.categoryService.saveCategory(categoryDto);
 
 		return "redirect:/admin/category";
 	}
@@ -80,10 +80,10 @@ public class CategoryController {
 		return "admin/category_edit";
 	}
 
-	@PostMapping("/category_update")
-	public String updateCategory(@ModelAttribute CategoryDto user) {
+	@PostMapping("/category_update/{id}")
+	public String updateCategory(@ModelAttribute CategoryDto categoryDto, @PathVariable int id) {
 
-		categoryService.saveCategory(user);
+		categoryService.updateCategory(categoryDto,id);
 
 		return "redirect:/admin/category";
 	}

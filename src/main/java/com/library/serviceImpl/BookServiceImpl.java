@@ -50,11 +50,11 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
-	public BookDto getBookById(int id) {
+	public Book getBookById(int id) {
 		
 		Book book = bookRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid ID : "+id));
 	
-		return this.modelMapper.map(book, BookDto.class);
+		return book;
 	}
 
 
@@ -71,31 +71,20 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
-	public BookDto updateBook(BookDto bookDto, int id) {
+	public Book updateBook(Book books, int id) {
 		Book book = bookRepo.findById(id).orElseThrow(() -> new UsernameNotFoundException("Book id not found:: "+id));
 				
-		book.setBook_name(bookDto.getBook_name());
-		book.setTitle(bookDto.getTitle());
-		book.setDescription(bookDto.getDescription());
-		book.setVersion_no(bookDto.getVersion_no());
-//		book.setPhotos(bookDto.ge);
+		book.setBook_name(books.getBook_name());
+		book.setTitle(books.getTitle());
+		book.setDescription(books.getDescription());
+		book.setVersion_no(books.getVersion_no());
+		book.setPhotos(books.getPhotos());
 		
 		Book updateBook = bookRepo.save(book);
-		BookDto updateBookDto = this.modelMapper.map(updateBook, BookDto.class);
+//		BookDto updateBookDto = this.modelMapper.map(updateBook, BookDto.class);
 		
-		return updateBookDto;
+		return updateBook;
 	}
-	
-	@Override
-	public List<Book> searchBooks(String keyword) {
-		
-//		if(keyword != null) {
-//			return this.bookRepo.search(keyword);
-//		}
-		
-		return bookRepo.findAll();
-	}
-	
 	
 	// upload image ...!!!
 	@Override
@@ -142,5 +131,17 @@ public class BookServiceImpl implements BookService{
 		
 		return inputStream;
 	}
+	
+	
+	@Override
+	public List<Book> searchBooks(String keyword) {
+		
+//		if(keyword != null) {
+//			return this.bookRepo.search(keyword);
+//		}
+		
+		return bookRepo.findAll();
+	}
+	
 
 }

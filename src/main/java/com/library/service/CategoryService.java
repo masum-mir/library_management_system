@@ -16,7 +16,7 @@ public interface CategoryService {
 	
 	public void deleteCategoryById(int id);
 	
-	public Category updateCategory(CategoryDto category, int id);
+	public CategoryDto updateCategory(CategoryDto category, int id);
 	
 
 }

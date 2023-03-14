@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -8,6 +9,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -60,22 +62,19 @@ public class AdminController {
 	@ModelAttribute
 	public void addCommonData(Model m, Principal principal) {
 		String username = principal.getName();
-		System.out.println("username :::::::::::::::" + username);
 		User user = userRepo.getUserByUserName(username);
-		System.out.println("user :::::::::::::::" + user);
 		m.addAttribute("user", user);
 	}
 
 	// dashboard api
 	
 	@GetMapping("/dashboard")
-	public String Home(Model m, Principal principal) {
+	public String Home(Model m) {
 		List<Book> book = bookservice.getAllBooks();
 		
-		System.out.println("Books:::::::::::: "+ book.toString());
-		
-		String str = path;
-		System.out.println("str ::::::::::::::::::::::::: " + str);
+//		System.out.println("Books:::::::::::: "+ book.iterator().next().getPhotos());
+//		String str = path + book.iterator().next().getPhotos();
+//		System.out.println("str ::::::::::::::::::::::::: " + str);
 		
 		m.addAttribute("book",book);
 		return "admin/admin_dashboard";

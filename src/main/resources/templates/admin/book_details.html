@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html th:replace="~{admin/base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="row" th:each="b: ${book}">
+								<div class="col-md-4">
+									<div>
+										<img alt="" th:src="${'/showImage/' + b.photos}"
+											style="width: 250px">
+									</div>
+								</div>
+								<div class="col-md-8">
+
+									<h2 th:text="${b.book_name}">Book Name:</h2>
+									<p th:text="${b.description}">Description:</p>
+									<div class="row">
+										<div class="col-md-4">
+											<p>Category Name:</p>
+										</div>
+										<div class="col-md-8" th:each="cate: ${b.categories}">
+											<span th:text="${cate.category_name}">Category Name:</span>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-md-4">
+											<p>Author Name:</p>
+										</div>
+										<div class="col-md-8" th:each="auth: ${b.authors}">
+											<span th:text="${auth.authorName}"></span>
+										</div>
+									</div>
+
+									<form th:action="@{/admin/book_details_save}" method="post">
+										<div class="row form-group mt-1">
+											<span class="col-md-4">Request To Date: </span>
+											<div class="col-md-8">
+												<input class="form-control" type="date"
+													name="book_given_date" />
+											</div>
+										</div>
+										<div class="row form-group mt-1">
+											<span class="col-md-4">Request From Date: </span>
+											<div class="col-md-8">
+												<input class="form-control" type="date"
+													name="book_return_date">
+											</div>
+										</div>
+
+										<div class="text-end mt-3">
+											<button type="submit" class="btn btn-success btn-sm">Request
+												Book</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+
+</body>
+</html>

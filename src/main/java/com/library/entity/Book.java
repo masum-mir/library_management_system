@@ -1,9 +1,10 @@
 package com.library.entity;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,9 +16,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "books")
@@ -32,17 +34,20 @@ public class Book extends BaseModel {
 	@Column(columnDefinition = "MEDIUMBLOB")
 	private String photos;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "books_categories", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "category_id") })
 	private Set<Category> categories = new HashSet<Category>();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "book_authors", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "author_id") })
 	private Set<Author> authors = new HashSet<Author>();
-
 	
+	@OneToMany(mappedBy = "books")
+	@JsonBackReference
+	private List<BookManagement> book_management;
+
 	public String getBook_name() {
 		return book_name;
 	}
@@ -122,14 +127,22 @@ public class Book extends BaseModel {
 	public Book() {
 	}
 
-	public void addCategory(Category category) {
-		this.categories.add(category);
-		category.getBooks().add(this);
+	public List<BookManagement> getBook_management() {
+		return book_management;
 	}
 
-	public void removeCategories(Category category) {
-		this.categories.remove(category);
-		category.getBooks().remove(this);
+	public void setBook_management(List<BookManagement> book_management) {
+		this.book_management = book_management;
 	}
+
+//	public void addCategory(Category category) {
+//		this.categories.add(category);
+//		category.getBooks().add(this);
+//	}
+//
+//	public void removeCategories(Category category) {
+//		this.categories.remove(category);
+//		category.getBooks().remove(this);
+//	}
 
 }

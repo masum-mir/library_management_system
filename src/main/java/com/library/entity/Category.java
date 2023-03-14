@@ -25,16 +25,6 @@ public class Category extends BaseModel{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int cat_id;
 	private String category_name;
-	
-	/*
-	 * // @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,
-	 * CascadeType.MERGE}, mappedBy = "categories")
-	 * 
-	 * @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
-	 * 
-	 * @JsonIgnore private Set<Book> books = new HashSet<>();
-	 */
-	
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "categories")
 	@JsonIgnore

@@ -31,9 +31,7 @@ public class AuthorController {
 	@ModelAttribute
 	public void addCommonData(Model m, Principal principal) {
 		String username = principal.getName();
-		System.out.println("username :::::::::::::::" + username);
 		User user = userRepo.getUserByUserName(username);
-		System.out.println("user :::::::::::::::" + user);
 		m.addAttribute("user", user);
 	}
 	
@@ -69,10 +67,10 @@ public class AuthorController {
 		return "/admin/author_edit";
 	}
 	
-	@PostMapping("/author_update")
-	public String updateAuthor(@ModelAttribute Author author) {
+	@PostMapping("/author_update/{id}")
+	public String updateAuthor(@ModelAttribute Author author, @PathVariable long id) {
 		
-		authorService.updateAuthor(author);
+		authorService.updateAuthor(author,id);
 		
 		return "redirect:/admin/authors";
 	}

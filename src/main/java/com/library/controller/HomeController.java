@@ -1,5 +1,7 @@
 package com.library.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -88,6 +90,9 @@ public class HomeController {
 		return "redirect:/signin";
 	}
 	
+	
+	// postman api ..!
+	
 	@PostMapping("/upload")
 	public ResponseEntity<FileResponse> fileUpload(@RequestParam("image") MultipartFile file) {
 		
@@ -102,15 +107,30 @@ public class HomeController {
 		return new ResponseEntity<>(new FileResponse(fileName, "Image save success"), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/showImage/{image}", produces = MediaType.IMAGE_JPEG_VALUE)
-	public void downloadImage(@PathVariable String image, HttpServletResponse response) throws IOException {
+	@GetMapping(value = "/showImage/{image}")
+	public void showImage(@PathVariable String image, HttpServletResponse response) throws IOException {
 		
-		InputStream resource = this.bookService.getResource(path, image);
+//		InputStream resource = this.bookService.getResource(path, image);
+		
+		File file = new File(path + File.separator + image);
+		
+		InputStream inputStream = new FileInputStream(file);
 		
 		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
 		
-		StreamUtils.copy(resource, response.getOutputStream());
+		StreamUtils.copy(inputStream, response.getOutputStream());
 		
 	}
-
+	
+	@GetMapping("/dashboard")
+	public ResponseEntity<?> showDashboard() {
+		
+		List<Book> books = bookService.getAllBooks();
+		
+		System.out.println("Books::: "+ books);
+		
+		return new ResponseEntity<>(books, HttpStatus.OK);
+		
+	}
+	
 }

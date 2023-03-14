@@ -74,7 +74,7 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav ms-auto">
 					<li class="input-sm "><input
-						class="form-control border rounded-pill " type="search" /></li>
+						class="form-control" type="search" /></li>
 					<li class="nav-item "><a class="nav-link"><span
 							th:text="${user.name}"></span> </a></li>
 					<li class="nav-item d-flex"><a class="nav-link"
@@ -88,14 +88,9 @@
 		<div class="row">
 			<div class="col-3" th:each="b: ${books}">
 				<div class="card text-black mb-2">
-					<div class="text-center">
-						<img class="w-100" alt="this is a image"
-							src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbXCpiYKfm11YUjU715AE4xto0XO6fzBiL8Q&usqp=CAU">
-						<a href="#!">
-							<div>
-								<div class="mask"
-									style="background-color: rgba(251, 251, 251, 0.15);"></div>
-							</div>
+					<div class="text-center mt-1 bg-image hover-zoom ripple rounded ripple-surface">
+						<a href="/user/book_details"> <img class="" style="max-width: 50%" alt="image"
+							th:src="@{${'/images/' + b.photos}}">
 						</a>
 					</div>
 					<div class="card-body">

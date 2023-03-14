@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.library.entity.Author;
+import com.library.exception.ResourceNotFoundException;
 import com.library.repositories.AuthorRepo;
 import com.library.service.AuthorService;
 
@@ -24,8 +26,16 @@ public class AuthorServiceImpl implements AuthorService{
 	}
 
 	@Override
-	public Author updateAuthor(Author author) {
-		return authorRepo.save(author);
+	public Author updateAuthor(Author authors, long id) {
+		
+		Author author = authorRepo.findById(id).orElseThrow(()-> new UsernameNotFoundException("Author id not found:: "+id));
+		
+		author.setAuthorName(authors.getAuthorName());
+		author.setAuthorAddress(authors.getAuthorAddress());
+		
+		Author updateAuthor = authorRepo.save(author);
+		
+		return updateAuthor;
 	}
 
 	@Override
