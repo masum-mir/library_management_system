@@ -26,9 +26,9 @@ public class RegistrationDetails {
 	private Date subscription_data;
 	private String registration_id;
 	
-	@OneToOne(mappedBy = "registration_details")
-	@JsonBackReference
-	private Customers customers;
+//	@OneToOne(mappedBy = "registration_details")
+//	@JsonBackReference
+//	private Customers customers;
 
 	public int getRegistration_details_id() {
 		return registration_details_id;
@@ -79,12 +79,12 @@ public class RegistrationDetails {
 		this.registration_id = registration_id;
 	}
 
-	public Customers getCustomers() {
-		return customers;
-	}
-
-	public void setCustomers(Customers customers) {
-		this.customers = customers;
-	}
+//	public Customers getCustomers() {
+//		return customers;
+//	}
+//
+//	public void setCustomers(Customers customers) {
+//		this.customers = customers;
+//	}
 
 }

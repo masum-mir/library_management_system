@@ -78,7 +78,7 @@ public class BookServiceImpl implements BookService{
 		book.setTitle(books.getTitle());
 		book.setDescription(books.getDescription());
 		book.setVersion_no(books.getVersion_no());
-		book.setPhotos(books.getPhotos());
+//		book.setPhotos(books.getPhotos());
 		
 		Book updateBook = bookRepo.save(book);
 //		BookDto updateBookDto = this.modelMapper.map(updateBook, BookDto.class);

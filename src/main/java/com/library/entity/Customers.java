@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -24,15 +25,17 @@ public class Customers {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int customer_id;
-	private String customer_name;
+	private String customer_first_name;
+	private String customer_last_name;
 	private String customer_address;
 	private String customer_number;
 	private String customer_email;
 	private String university_name;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JsonManagedReference
-	private RegistrationDetails registration_details;
+//	@OneToOne(cascade = CascadeType.ALL)
+//	@JsonManagedReference
+//	@JsonIgnore
+//	private RegistrationDetails registration_details;
 	
 	@OneToMany(mappedBy = "customer_details")
 	@JsonBackReference
@@ -46,13 +49,21 @@ public class Customers {
 	public void setCustomer_id(int customer_id) {
 		this.customer_id = customer_id;
 	}
-
-	public String getCustomer_name() {
-		return customer_name;
+	
+	public String getCustomer_first_name() {
+		return customer_first_name;
 	}
 
-	public void setCustomer_name(String customer_name) {
-		this.customer_name = customer_name;
+	public void setCustomer_first_name(String customer_first_name) {
+		this.customer_first_name = customer_first_name;
+	}
+
+	public String getCustomer_last_name() {
+		return customer_last_name;
+	}
+
+	public void setCustomer_last_name(String customer_last_name) {
+		this.customer_last_name = customer_last_name;
 	}
 
 	public String getCustomer_address() {
@@ -87,13 +98,13 @@ public class Customers {
 		this.university_name = university_name;
 	}
 
-	public RegistrationDetails getRegistration_details() {
-		return registration_details;
-	}
-
-	public void setRegistration_details(RegistrationDetails registration_details) {
-		this.registration_details = registration_details;
-	}
+//	public RegistrationDetails getRegistration_details() {
+//		return registration_details;
+//	}
+//
+//	public void setRegistration_details(RegistrationDetails registration_details) {
+//		this.registration_details = registration_details;
+//	}
 
 	public List<BookManagement> getBookManagement() {
 		return bookManagement;

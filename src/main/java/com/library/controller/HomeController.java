@@ -19,14 +19,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.library.dto.BookDto;
 import com.library.entity.Book;
+import com.library.entity.Customers;
 import com.library.entity.User;
 import com.library.payloads.FileResponse;
 import com.library.service.BookService;
+import com.library.service.CustomerService;
 import com.library.serviceImpl.UserServiceImpl;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -46,6 +49,9 @@ public class HomeController {
 
 	@Autowired
 	PasswordEncoder encoder;
+	
+	@Autowired
+	CustomerService customerService;
 
 	@GetMapping("/")
 	public String Home(Model model) {
@@ -131,6 +137,23 @@ public class HomeController {
 		
 		return new ResponseEntity<>(books, HttpStatus.OK);
 		
+	}
+	
+	
+	@GetMapping("/customer")
+	public ResponseEntity<List<Customers>> getCustomer() {
+		
+		List<Customers> customer = customerService.getCustomer();
+		
+		return new ResponseEntity<List<Customers>>(customer,HttpStatus.OK);
+	}
+	
+	@PostMapping("/customer/save")
+	public ResponseEntity<Customers> saveCustomer(@RequestBody Customers customers) {
+		
+		Customers save = customerService.createCustomer(customers);
+		
+		return new ResponseEntity<>(save, HttpStatus.CREATED);
 	}
 	
 }

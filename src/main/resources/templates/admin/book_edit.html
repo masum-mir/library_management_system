@@ -30,6 +30,10 @@
 								name="title" th:value="${book.title}" class="form-control">
 						</div>
 						<div>
+							<label class="form-label">Description:</label>
+							<input type="text" name="description" class="form-control" th:value="${book.description}" />
+						</div>
+						<div>
 							<label class="form-label">Version No: </label> <input type="text"
 								name="version_no" th:value="${book.version_no}"
 								class="form-control" />
