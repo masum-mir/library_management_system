@@ -4,6 +4,21 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+	integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 <style type="text/css">
 body {
@@ -13,8 +28,6 @@ body {
 
 </head>
 <body>
-
-
 
 	<section>
 		<div class="container py-2">
@@ -37,7 +50,9 @@ body {
 								<span class="text-muted mb-4" th:each="auth:${b.authors}">
 									<p th:text="${auth.authorName}"></p>
 								</span>
-								<a class="btn btn-sm btn-success">Given Book</a>
+								<button type="button" class="btn btn-sm btn-success" th:attr="data-target='#given_model'+${b.book_id}"
+								 data-bs-toggle="modal"
+									data-bs-target="#given_model">Given Book</button>
 								<a class="btn btn-sm btn-success">Return Book</a>
 							</div>
 						</div>
@@ -45,9 +60,63 @@ body {
 				</div>
 			</div>
 		</div>
+
+		<div class="modal fade" id="given_model" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Given Details</h5>
+						<button type="button" class="btn-close btn-sm"
+							data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form th:action="@{/admin/book_details_save}" method="post">
+								<input type="text" name="${books.book_id}" class="form-control" /> 
+							<div>
+								<label class="form-label">Customer Name: </label>
+								<select class="form-control" name="customer_details.customer_id">
+									<option>Select</option>
+									<option th:each="c: ${customers}"
+										th:if="${c.customer_first_name !=null}"
+										th:value="${c.customer_id}"
+										th:text="${c.customer_first_name} + ' '+ ${c.customer_last_name} + ' ' + ${c.customer_number} ">hello</option>
+								</select>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label class="form-label">From Date: </label> <input
+										type="date" class="form-control" name="book_given_date"
+										style="cursor: pointer" />
+								</div>
+								<div class="col-md-6">
+									<label class="form-label">To Date: </label> <input type="date"
+										class="form-control" name="book_return_date"
+										style="cursor: pointer" />
+								</div>
+
+							</div>
+							<div class="text-end mt-2">
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</div>
+						</form>
+					</div>
+					<!-- <div class="modal-footer">
+						<button type="button" th:onclick="@{/admin/book_details_save}"
+							class="btn btn-primary">Submit</button>
+					</div> -->
+				</div>
+			</div>
+		</div>
+
 	</section>
 
-
+	<script type="text/javascript">
+	alert("hi");
+		/* $('given_model').on('show.bs.modal', function(e) {
+			var id = $(e.relatedTarget).data('book_id');
+		}) */
+	</script>
 
 </body>
 </html>

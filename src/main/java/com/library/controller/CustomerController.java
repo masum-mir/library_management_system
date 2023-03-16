@@ -41,5 +41,31 @@ public class CustomerController {
 		return "admin/customer_information";
 	}
 	
+	@GetMapping("/admin/customer_information")
+	public String studentInfo() {
+		
+		return "admin/customer_registration";
+	}
+	
+	@PostMapping("/admin/student_info_save")
+	public String studentInfoSave(@ModelAttribute Customers customers) {
+		
+		this.customerService.createCustomer(customers);
+		
+		return "redirect:/admin/customer_information";
+	}
+	
+
+//	@GetMapping("/admin/students")
+//	@ModelAttribute
+//	public void getCustomer(Model m) {
+//		
+//		List<Customers> customers = customerService.getCustomer();
+//		System.out.println("customers: : : : ::::::::::::::::::::::::::::::"+ customers);
+//		
+//		m.addAttribute("customers",customers);
+//		
+//	}
+	
 	
 }

@@ -49,7 +49,7 @@ public class BookManagementController {
 		
 		Book book = bookService.getBookById(id);
 		
-		model.addAttribute("book",book);
+		model.addAttribute("books",book);
 		
 		return "admin/book_details";
 	}

@@ -32,12 +32,11 @@ public class Customers {
 	private String customer_email;
 	private String university_name;
 	
-//	@OneToOne(cascade = CascadeType.ALL)
-//	@JsonManagedReference
-//	@JsonIgnore
-//	private RegistrationDetails registration_details;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private RegistrationDetails registration_details;
 	
-	@OneToMany(mappedBy = "customer_details")
+	@OneToMany(mappedBy = "customer_details", cascade = CascadeType.ALL)
 	@JsonBackReference
 	private List<BookManagement> bookManagement;
 
@@ -98,13 +97,13 @@ public class Customers {
 		this.university_name = university_name;
 	}
 
-//	public RegistrationDetails getRegistration_details() {
-//		return registration_details;
-//	}
-//
-//	public void setRegistration_details(RegistrationDetails registration_details) {
-//		this.registration_details = registration_details;
-//	}
+	public RegistrationDetails getRegistration_details() {
+		return registration_details;
+	}
+
+	public void setRegistration_details(RegistrationDetails registration_details) {
+		this.registration_details = registration_details;
+	}
 
 	public List<BookManagement> getBookManagement() {
 		return bookManagement;

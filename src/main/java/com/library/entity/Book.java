@@ -44,7 +44,7 @@ public class Book extends BaseModel {
 			@JoinColumn(name = "author_id") })
 	private Set<Author> authors = new HashSet<Author>();
 	
-	@OneToMany(mappedBy = "books")
+	@OneToMany(mappedBy = "books", cascade = CascadeType.ALL)
 	@JsonBackReference
 	private List<BookManagement> book_management;
 

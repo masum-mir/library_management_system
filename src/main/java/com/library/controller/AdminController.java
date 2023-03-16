@@ -30,11 +30,13 @@ import com.library.dto.CategoryDto;
 import com.library.entity.Author;
 import com.library.entity.Book;
 import com.library.entity.Category;
+import com.library.entity.Customers;
 import com.library.entity.User;
 import com.library.repositories.UserRepo;
 import com.library.service.AuthorService;
 import com.library.service.BookService;
 import com.library.service.CategoryService;
+import com.library.service.CustomerService;
 import com.library.service.UserService;
 
 @Controller
@@ -58,6 +60,9 @@ public class AdminController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	CustomerService customerService;
 
 	@ModelAttribute
 	public void addCommonData(Model m, Principal principal) {
@@ -70,13 +75,10 @@ public class AdminController {
 	
 	@GetMapping("/dashboard")
 	public String Home(Model m) {
-		List<Book> book = bookservice.getAllBooks();
 		
-//		System.out.println("Books:::::::::::: "+ book.iterator().next().getPhotos());
-//		String str = path + book.iterator().next().getPhotos();
-//		System.out.println("str ::::::::::::::::::::::::: " + str);
-		
+		List<Book> book = bookservice.getAllBooks();		
 		m.addAttribute("book",book);
+		
 		return "admin/admin_dashboard";
 	}
 
@@ -86,5 +88,17 @@ public class AdminController {
 		return "NewFile";
 	}	
 
+	@ModelAttribute
+	public void getCustomer(Model m) {
+	
+		List<Customers> customers = customerService.getCustomer();
+		System.out.println("customers: : : : ::::::::::::::::::::::::::::::"+ customers);
+		
+		m.addAttribute("customers",customers);
+		
+//		Book book = bookservice.getBookById(id);
+//		m.addAttribute("bookById",book);
+	}
+	
 
 }

@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,7 +39,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
-	
+
 	@Value("${project.image}")
 	private String path;
 
@@ -49,7 +51,7 @@ public class HomeController {
 
 	@Autowired
 	PasswordEncoder encoder;
-	
+
 	@Autowired
 	CustomerService customerService;
 
@@ -95,65 +97,65 @@ public class HomeController {
 
 		return "redirect:/signin";
 	}
-	
-	
+
 	// postman api ..!
-	
+
 	@PostMapping("/upload")
 	public ResponseEntity<FileResponse> fileUpload(@RequestParam("image") MultipartFile file) {
-		
+
 		String fileName = null;
-		
+
 		try {
 			fileName = this.bookService.uploadImage(path, file);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return new ResponseEntity<>(new FileResponse(fileName, "Image save success"), HttpStatus.OK);
 	}
-	
+
 	@GetMapping(value = "/showImage/{image}")
 	public void showImage(@PathVariable String image, HttpServletResponse response) throws IOException {
-		
+
 //		InputStream resource = this.bookService.getResource(path, image);
-		
+
 		File file = new File(path + File.separator + image);
-		
+
 		InputStream inputStream = new FileInputStream(file);
-		
+
 		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-		
+
 		StreamUtils.copy(inputStream, response.getOutputStream());
-		
+
 	}
-	
+
 	@GetMapping("/dashboard")
 	public ResponseEntity<?> showDashboard() {
-		
+
 		List<Book> books = bookService.getAllBooks();
-		
-		System.out.println("Books::: "+ books);
-		
+
+		System.out.println("Books::: " + books);
+
 		return new ResponseEntity<>(books, HttpStatus.OK);
-		
+
 	}
-	
-	
+
+	// customer control postman api
+
 	@GetMapping("/customer")
 	public ResponseEntity<List<Customers>> getCustomer() {
-		
+
 		List<Customers> customer = customerService.getCustomer();
-		
-		return new ResponseEntity<List<Customers>>(customer,HttpStatus.OK);
+
+		return new ResponseEntity<List<Customers>>(customer, HttpStatus.OK);
 	}
-	
-	@PostMapping("/customer/save")
+
+	@RequestMapping(value = "/customer/save", method = RequestMethod.POST , consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Customers> saveCustomer(@RequestBody Customers customers) {
-		
+
 		Customers save = customerService.createCustomer(customers);
-		
+
 		return new ResponseEntity<>(save, HttpStatus.CREATED);
 	}
-	
+
 }

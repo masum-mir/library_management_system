@@ -34,7 +34,7 @@ input.input-group-append {
 				<div class="col-12">
 					<div class="card">
 						<div class="card-body">
-							<div class="row" th:each="b: ${book}">
+							<div class="row" th:each="b: ${books}">
 								<div class="col-md-4">
 									<div>
 										<img alt="" th:src="${'/showImage/' + b.photos}"
@@ -61,7 +61,7 @@ input.input-group-append {
 											<small th:text="${cate.category_name}"></small>
 										</div>
 									</div>
-									<form th:action="@{/admin/book_details_save}" method="post">
+								<!-- 	<form th:action="@{/admin/book_details_save}" method="post">
 
 										<div class="row form-group mt-1">
 											<span class="col-md-4 form-label">Book Movement
@@ -96,6 +96,7 @@ input.input-group-append {
 												Book</a>
 										</div>
 									</form>
+								 -->
 								</div>
 							</div>
 						</div>

@@ -56,7 +56,7 @@ public class MyConfig{
 		.requestMatchers("/**")
 		.permitAll().and().formLogin()
 		.loginPage("/signin")
-		.loginProcessingUrl("/dosignin")
+		.loginProcessingUrl("/dosignin2")
 		.defaultSuccessUrl("/admin/dashboard")
 //		.and()
 //		.sessionManagement()
