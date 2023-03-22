@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -85,7 +86,7 @@ public class HomeController {
 		} else {
 
 			user.setPassword(encoder.encode(user.getPassword()));
-			user.setRole("ROLE_USER");
+			user.setRole("ROLE_ADMIN");
 			User usr = service.userSave(user);
 
 			if (usr != null) {
@@ -158,4 +159,20 @@ public class HomeController {
 		return new ResponseEntity<>(save, HttpStatus.CREATED);
 	}
 
+	// searching customer
+	@GetMapping("/customer/{id}")
+	public ResponseEntity<List<Customers>> searchCustomer(@PathVariable Long id) {
+		List<Customers> customer = customerService.findByCustomerIdContaining(id);
+		
+		return new ResponseEntity<List<Customers>>(customer, HttpStatus.OK);
+	}
+	
+	@GetMapping("/book/{keyword}")
+	public ResponseEntity<List<Book>> searchBook(@PathVariable String keyword) {
+		
+		List<Book> book = bookService.searchBooks(keyword);
+		
+		return new ResponseEntity<List<Book>>(book, HttpStatus.OK);
+		
+	}
 }

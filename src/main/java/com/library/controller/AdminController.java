@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,7 +51,7 @@ public class AdminController {
 	UserRepo userRepo;
 
 	@Autowired
-	BookService bookservice;
+	BookService bookService;
 
 	@Autowired
 	CategoryService categoryService;
@@ -76,7 +77,7 @@ public class AdminController {
 	@GetMapping("/dashboard")
 	public String Home(Model m) {
 		
-		List<Book> book = bookservice.getAllBooks();		
+		List<Book> book = bookService.getAllBooks();		
 		m.addAttribute("book",book);
 		
 		return "admin/admin_dashboard";
@@ -96,9 +97,19 @@ public class AdminController {
 		
 		m.addAttribute("customers",customers);
 		
-//		Book book = bookservice.getBookById(id);
+//		Book book = bookService.getBookById(id);
 //		m.addAttribute("bookById",book);
 	}
+	
+//	@PostMapping("/searchBook")
+//	public String SearchBooks(@RequestParam("keyword") String keyword, Model model) {
+//		final List<Book> books = bookService.searchBooks(keyword);
+//		
+//		model.addAttribute("books",books);
+//		model.addAttribute("keyword", keyword);
+//		return "admin/dashboard";
+//	}
+
 	
 
 }

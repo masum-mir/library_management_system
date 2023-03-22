@@ -156,39 +156,41 @@ public class BookController {
 		return "admin/book_add";
 	}
 
-	@GetMapping("/book_edit/{book_id}")
-	public String editBook(@PathVariable int book_id, Model model) {
+	@GetMapping("/book_edit/{bookId}")
+	public String editBook(@PathVariable long bookId, Model model) {
 
-		Book book = bookservice.getBookById(book_id);
+		Book book = bookservice.getBookById(bookId);
 		model.addAttribute("book", book);
 
 		return "admin/book_edit";
 	}
 
-	@PostMapping("/book_update/{book_id}")
-	public String updateBook(@ModelAttribute Book book, @PathVariable int book_id) {
+	@PostMapping("/book_update/{bookId}")
+	public String updateBook(@ModelAttribute Book book, @PathVariable long bookId) {
 
-		bookservice.updateBook(book, book_id);
+		bookservice.updateBook(book, bookId);
 
 		return "redirect:/admin/book";
 	}
 
-	@GetMapping("/book_delete/{book_id}")
-	public String deleteBook(@PathVariable int book_id) {
-		bookservice.deleteBook(book_id);
+	@GetMapping("/book_delete/{bookId}")
+	public String deleteBook(@PathVariable long bookId) {
+		bookservice.deleteBook(bookId);
 
 		return "redirect:/admin/book";
 	}
 	
-//	
-//	@RequestMapping("/searchBook")
-//	public String SearchBooks(@Param("keyword") String keyword, Model model) {
-//		final List<Book> books = bookservice.searchBooks(keyword);
-//		
-//		model.addAttribute("books",books);
+
+	@RequestMapping("/searchBook/{keyword}")
+	public String SearchBooks(@PathVariable String keyword, Model model, Book book) {
+		if(keyword != null) {
+			final List<Book> books = bookservice.searchBooks(keyword);
+			model.addAttribute("books",books);
+		}
+		
 //		model.addAttribute("keyword", keyword);
-//		return "admin/book_list";
-//	}
+		return "admin/dashboard";
+	}
 
 //	@GetMapping("/book_details/{id}")
 //	public String getBookDetails(@PathVariable int id, Model model) {

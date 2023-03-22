@@ -37,7 +37,7 @@
 							</thead>
 							<tbody>
 								<tr th:each="b:${book}">
-									<td th:text="${b.book_name}"></td>
+									<td th:text="${b.bookName}"></td>
 									<span th:each="author: ${b.authors}"><td
 										th:text="${author.authorName}"></td></span>
 									<td th:text="${b.title}"></td>
@@ -48,9 +48,9 @@
 										<td th:text="${cate.category_name}"></td>
 									</span>
 									<td><a
-										th:href="@{book_edit/{book_id}(book_id=${b.book_id})}"
+										th:href="@{book_edit/{bookId}(bookId=${b.bookId})}"
 										class="btn btn-sm btn-primary">Edit</a> <a
-										th:href="@{book_delete/{book_id}(book_id=${b.book_id})}"
+										th:href="@{book_delete/{bookId}(bookId=${b.bookId})}"
 										class="btn btn-sm btn-danger">Delete</a></td>
 								</tr>
 							</tbody>

@@ -13,13 +13,13 @@ public interface BookService {
 	
 	public List<Book> getAllBooks();
 	
-	public Book getBookById(int book_id);
+	public Book getBookById(long book_id);
 	
 	public Book saveBook(Book book);
 	
-	public void deleteBook(int book_id);
+	public void deleteBook(long book_id);
 	
-	public Book updateBook(Book book, int book_id);
+	public Book updateBook(Book book, long book_id);
 	
 	public List<Book> searchBooks(String keywords);
 	

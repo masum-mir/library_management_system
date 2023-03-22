@@ -26,8 +26,8 @@ import jakarta.persistence.Transient;
 public class Book extends BaseModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int book_id;
-	private String book_name;
+	private Long bookId;
+	private String bookName;
 	private String title;
 	private String version_no;
 	private String description;
@@ -43,17 +43,18 @@ public class Book extends BaseModel {
 	@JoinTable(name = "book_authors", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "author_id") })
 	private Set<Author> authors = new HashSet<Author>();
-	
-	@OneToMany(mappedBy = "books", cascade = CascadeType.ALL)
-	@JsonBackReference
-	private List<BookManagement> book_management;
 
-	public String getBook_name() {
-		return book_name;
+	@OneToOne(mappedBy = "books", cascade = CascadeType.ALL)
+	@JsonBackReference
+//	private List<BookManagement> book_management;
+	private TxDetails tx_Details;
+
+	public String getBookName() {
+		return bookName;
 	}
 
-	public void setBook_name(String book_name) {
-		this.book_name = book_name;
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
 	}
 
 	public Set<Category> getCategories() {
@@ -80,12 +81,12 @@ public class Book extends BaseModel {
 		this.version_no = version_no;
 	}
 
-	public int getBook_id() {
-		return book_id;
+	public Long getBookId() {
+		return bookId;
 	}
 
-	public void setBook_id(int book_id) {
-		this.book_id = book_id;
+	public void setBookId(Long bookId) {
+		this.bookId = bookId;
 	}
 
 	public String getPhotos() {
@@ -93,18 +94,6 @@ public class Book extends BaseModel {
 	}
 
 	public void setPhotos(String photos) {
-		this.photos = photos;
-	}
-
-	public Book(int book_id, String book_name, String title, String version_no, String description, String photos,
-			Set<Category> categories) {
-		super();
-		this.book_id = book_id;
-		this.book_name = book_name;
-		this.title = title;
-		this.version_no = version_no;
-		this.description = description;
-		this.categories = categories;
 		this.photos = photos;
 	}
 
@@ -127,13 +116,21 @@ public class Book extends BaseModel {
 	public Book() {
 	}
 
-	public List<BookManagement> getBook_management() {
-		return book_management;
+	public TxDetails getTx_Details() {
+		return tx_Details;
 	}
 
-	public void setBook_management(List<BookManagement> book_management) {
-		this.book_management = book_management;
+	public void setTx_Details(TxDetails tx_Details) {
+		this.tx_Details = tx_Details;
 	}
+
+//	public List<BookManagement> getBook_management() {
+//		return book_management;
+//	}
+//
+//	public void setBook_management(List<BookManagement> book_management) {
+//		this.book_management = book_management;
+//	}
 
 //	public void addCategory(Category category) {
 //		this.categories.add(category);

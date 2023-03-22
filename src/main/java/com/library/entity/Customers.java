@@ -24,7 +24,7 @@ public class Customers {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int customer_id;
+	private Long customerId;
 	private String customer_first_name;
 	private String customer_last_name;
 	private String customer_address;
@@ -36,17 +36,18 @@ public class Customers {
 	@JsonManagedReference
 	private RegistrationDetails registration_details;
 	
-	@OneToMany(mappedBy = "customer_details", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "customer_details", cascade = CascadeType.ALL)
 	@JsonBackReference
-	private List<BookManagement> bookManagement;
+//	private List<BookManagement> bookManagement;
+	private TxDetails tx_details;
 
 	
-	public int getCustomer_id() {
-		return customer_id;
+	public Long getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomer_id(int customer_id) {
-		this.customer_id = customer_id;
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
 	}
 	
 	public String getCustomer_first_name() {
@@ -105,12 +106,20 @@ public class Customers {
 		this.registration_details = registration_details;
 	}
 
-	public List<BookManagement> getBookManagement() {
-		return bookManagement;
+	public TxDetails getTx_details() {
+		return tx_details;
 	}
 
-	public void setBookManagement(List<BookManagement> bookManagement) {
-		this.bookManagement = bookManagement;
+	public void setTx_details(TxDetails tx_details) {
+		this.tx_details = tx_details;
 	}
-
+	
+//	public List<BookManagement> getBookManagement() {
+//		return bookManagement;
+//	}
+//
+//	public void setBookManagement(List<BookManagement> bookManagement) {
+//		this.bookManagement = bookManagement;
+//	}
+	
 }

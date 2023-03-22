@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.library.enums.BookMovementStatus;
@@ -24,11 +25,11 @@ import jakarta.persistence.Transient;
 
 @Entity
 @Table(name="book_managements")
-public class BookManagement {
+public class BookManagement{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int book_management_id;
+	private int bookManagementId;
 	
 	@Enumerated(EnumType.STRING)
 	private BookMovementStatus book_movement_status;
@@ -39,21 +40,23 @@ public class BookManagement {
 	private Date book_return_date;
 	private String book_condition_during_given;
 	private String book_condition_during_return;
+	private String type;
 	
-	@ManyToOne
-	@JoinColumn(name="customer_id")
-	private Customers customer_details;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private TxDetails tx_details;
 	
-	@ManyToOne
-	private Book books;
 	
-	public int getBook_management_id() {
-		return book_management_id;
-	}
-
-	public void setBook_management_id(int book_management_id) {
-		this.book_management_id = book_management_id;
-	}
+	/*  
+	  @ManyToOne
+	  @JoinColumn(name="customerId") 
+	  private Customers customer_details;
+	  
+	  @ManyToOne 
+	  private Book books;
+	  
+	 */
+	
 
 	public BookMovementStatus getBook_movement_status() {
 		return book_movement_status;
@@ -94,21 +97,41 @@ public class BookManagement {
 	public void setBook_condition_during_return(String book_condition_during_return) {
 		this.book_condition_during_return = book_condition_during_return;
 	}
+	
+//	  public Book getBooks() { return books; }
+//	  
+//	  public void setBooks(Book books) { this.books = books; }
+//	  
+//	  public Customers getCustomer_details() { return customer_details; }
+//	  
+//	  public void setCustomer_details(Customers customer_details) {
+//	  this.customer_details = customer_details; }
+//	 
 
-	public Book getBooks() {
-		return books;
+	public String getType() {
+		return type;
 	}
 
-	public void setBooks(Book books) {
-		this.books = books;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public Customers getCustomer_details() {
-		return customer_details;
+	public int getBookManagementId() {
+		return bookManagementId;
 	}
 
-	public void setCustomer_details(Customers customer_details) {
-		this.customer_details = customer_details;
+	public TxDetails getTx_details() {
+		return tx_details;
 	}
+
+	public void setTx_details(TxDetails tx_details) {
+		this.tx_details = tx_details;
+	}
+
+	public void setBookManagementId(int bookManagementId) {
+		this.bookManagementId = bookManagementId;
+	}
+	
+	
 	
 }

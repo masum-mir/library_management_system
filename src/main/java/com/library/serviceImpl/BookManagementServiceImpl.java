@@ -22,7 +22,7 @@ public class BookManagementServiceImpl implements BookManagementService{
 	@Override
 	public List<BookManagement> getBookInfo() {
 		
-		return bookManagementRepo.findAll();
+		return bookManagementRepo.findByType();
 	}
 
 	@Override
@@ -32,12 +32,25 @@ public class BookManagementServiceImpl implements BookManagementService{
 	}
 
 	@Override
+	public BookManagement updateBookManagement(BookManagement book, int id) {
+		
+		BookManagement bookManagement = bookManagementRepo.findById(id).orElseThrow(()-> new UsernameNotFoundException("id:: :"+id));
+		
+		bookManagement.setBook_return_date(book.getBook_return_date());
+		bookManagement.setType(book.getType());
+		
+		BookManagement saveBook = bookManagementRepo.save(bookManagement);
+		
+		return saveBook;
+	}
+
+	@Override
 	public BookManagement findByBookManagementId(int id) {
 		
 		BookManagement book = bookManagementRepo.findById(id).orElseThrow(()-> new UsernameNotFoundException("Book Id Not Found:: "+ id));
 		
 		return book;
 	}
-	
+
 	
 }

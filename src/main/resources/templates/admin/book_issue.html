@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html th:replace="admin/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<section>
+
+		<div class="container mt-4">
+			<div class="row">
+				<div class="col-md-8 offset-2">
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<thead class="table-dark">
+								<tr>
+									<th>Name</th>
+									<th>Mobile</th>
+									<th>Email</th>
+									<th>Book Name</th>
+									<th>Issue Date</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="book: ${bookManagement}">
+									<span th:each="customer: ${book.customer_details}">
+										<td
+										th:text="${customer.customer_first_name} + ' ' + ${customer.customer_last_name}"></td>
+										<td th:text="${customer.customer_number}"></td>
+										<td th:text="${customer.customer_email}"></td>
+									</span>
+									<span th:each="b: ${book.books}">
+										<td th:text="${b.bookName}"></td>
+									</span>
+									<td th:text="${{book.book_given_date}}"></td>
+								</tr>
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+	</section>
+
+</body>
+</html>

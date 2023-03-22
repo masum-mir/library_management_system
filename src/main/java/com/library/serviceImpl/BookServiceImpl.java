@@ -43,14 +43,14 @@ public class BookServiceImpl implements BookService{
 	@Override
 	public List<Book> getAllBooks() {
 		
-		List<Book> books = bookRepo.findAll();
+		List<Book> books = (List<Book>) bookRepo.findAll();
 //		List<BookDto> bookDto = books.stream().map(e -> this.modelMapper.map(e, BookDto.class)).collect(Collectors.toList());
 		
 		return books;
 	}
 
 	@Override
-	public Book getBookById(int id) {
+	public Book getBookById(long id) {
 		
 		Book book = bookRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid ID : "+id));
 	
@@ -65,16 +65,16 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
-	public void deleteBook(int id) {
+	public void deleteBook(long id) {
 		bookRepo.deleteById(id);
 		
 	}
 
 	@Override
-	public Book updateBook(Book books, int id) {
+	public Book updateBook(Book books, long id) {
 		Book book = bookRepo.findById(id).orElseThrow(() -> new UsernameNotFoundException("Book id not found:: "+id));
 				
-		book.setBook_name(books.getBook_name());
+		book.setBookName(books.getBookName());
 		book.setTitle(books.getTitle());
 		book.setDescription(books.getDescription());
 		book.setVersion_no(books.getVersion_no());
@@ -132,16 +132,15 @@ public class BookServiceImpl implements BookService{
 		return inputStream;
 	}
 	
-	
 	@Override
-	public List<Book> searchBooks(String keyword) {
+	public List<Book> searchBooks(String keywords) {
 		
-//		if(keyword != null) {
-//			return this.bookRepo.search(keyword);
-//		}
+		if(keywords != null) {
+			return this.bookRepo.findByBookName("%"+keywords+"%");
+		}
 		
-		return bookRepo.findAll();
+		return this.bookRepo.findAll();
 	}
-	
+
 
 }

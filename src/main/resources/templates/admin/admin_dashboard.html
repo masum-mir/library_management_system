@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:replace="admin/base::layout(~{::section})">
+	th:replace="~{admin/base::layout(~{::section})}">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -19,7 +19,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
+<!-- <script type="text/javascript" src="../static/script.js" th:src="@{/static/script.js}"></script> -->
 <style type="text/css">
 body {
 	background-color: #eee;
@@ -30,13 +30,26 @@ body {
 <body>
 
 	<section>
+<!-- 
+		<form th:action="@{/admin/searchBook)}" method="get"
+			class="form-inline">
+			<div class="row">
+				<div class="col-md-6">
+					<input class="form-control " name="keyword" type="text"
+						placeholder="search" th:value="${keyword}" /> <input
+						class="btn btn-outline-success" type="submit"
+						value="search">
+				</div>
+			</div>
+		</form> -->
+
 		<div class="container py-2">
 			<div class="row">
 				<div class="col-3" th:each="b: ${book}">
 					<div class="card text-black mb-2">
 						<div class="text-center mt-2">
 
-							<a th:href="@{/admin/book_details/{id}(id=${b.book_id})}"> <img
+							<a th:href="@{/admin/book_details/{id}(id=${b.bookId})}"> <img
 								class="" th:if="${b.photos != null}" style="max-width: 50%"
 								alt="image" th:src="${'/showImage/' +b.photos}"> <img
 								alt="not found" th:if="${b.photos == null}"
@@ -46,14 +59,16 @@ body {
 						</div>
 						<div class="card-body">
 							<div class="text-center">
-								<h5 class="card-title" th:text="${b.book_name}"></h5>
+								<h5 class="card-title" th:text="${b.bookName}"></h5>
 								<span class="text-muted mb-4" th:each="auth:${b.authors}">
 									<p th:text="${auth.authorName}"></p>
 								</span>
-								<button type="button" class="btn btn-sm btn-success" th:attr="data-target='#given_model'+${b.book_id}"
-								 data-bs-toggle="modal"
-									data-bs-target="#given_model">Given Book</button>
-								<a class="btn btn-sm btn-success">Return Book</a>
+								<button class="btn btn-sm btn-success" type="button"
+									th:onclick="'setBookId('+${b.bookId}+')'"
+									data-bs-toggle="modal" data-bs-target="#given_model">Issue</button>
+								<a class="btn btn-sm btn-success"
+									th:onclick="'returnBookId('+${b.bookId}+')'"
+									data-bs-toggle="modal" data-bs-target="#return_model">Return</a>
 							</div>
 						</div>
 					</div>
@@ -61,43 +76,38 @@ body {
 			</div>
 		</div>
 
+		<!-- <div th:fragment="modal" class="modal fade"  th:id="'given_model'+${b.bookId}" tabindex="-1" -->
 		<div class="modal fade" id="given_model" tabindex="-1"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">Given Details</h5>
+						<h5 class="modal-title">Borrow Details</h5>
 						<button type="button" class="btn-close btn-sm"
 							data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						<form th:action="@{/admin/book_details_save}" method="post">
-								<input type="text" name="${books.book_id}" class="form-control" /> 
+						<form th:action="@{/admin/save_book_borrow}" method="post">
+
+							<input type="hidden" id="borrow_book" name="books.bookId"
+								class="form-control" />
+
 							<div>
-								<label class="form-label">Customer Name: </label>
-								<select class="form-control" name="customer_details.customer_id">
-									<option>Select</option>
+								<label class="form-label">Customer Name: </label> <select
+									class="form-control" name="customer_details.customerId"
+									style="cursor: pointer">
+									<option th:value="0" th:text="Select"></option>
 									<option th:each="c: ${customers}"
 										th:if="${c.customer_first_name !=null}"
-										th:value="${c.customer_id}"
+										th:value="${c.customerId}"
 										th:text="${c.customer_first_name} + ' '+ ${c.customer_last_name} + ' ' + ${c.customer_number} ">hello</option>
 								</select>
 							</div>
-							<div class="row">
-								<div class="col-md-6">
-									<label class="form-label">From Date: </label> <input
-										type="date" class="form-control" name="book_given_date"
-										style="cursor: pointer" />
-								</div>
-								<div class="col-md-6">
-									<label class="form-label">To Date: </label> <input type="date"
-										class="form-control" name="book_return_date"
-										style="cursor: pointer" />
-								</div>
-
-							</div>
-							<div class="text-end mt-2">
-								<button type="submit" class="btn btn-primary">Submit</button>
+							<label class="form-label">Issue Date: </label> <input type="date"
+								class="form-control" name="book_given_date"
+								style="cursor: pointer" />
+							<div class="text-center mt-2">
+								<button type="submit" class="btn btn-primary">Issue</button>
 							</div>
 						</form>
 					</div>
@@ -109,14 +119,96 @@ body {
 			</div>
 		</div>
 
+		<div class="modal fade" id="return_model">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Return Details</h5>
+						<button type="button" class="btn btn-close btn-sm"
+							data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form th:action="@{/admin/save_book_return/1752}" method="post">
+
+							<div>
+								<input />
+							</div>
+							<div>
+								<label>Book ID:</label> <input type="text" id="return_book"
+									class="form-control btn-sm" name="books.bookId" />
+							</div>
+							<div class="row">
+								<label>Student ID:</label>
+								<div class="col-md-10">
+									<input type="text" class="form-control btn-sm"
+										name="customerId" />
+								</div>
+								<div class="col-md-2">
+									<a class="btn btn-sm btn-primary">Search</a>
+								</div>
+
+							</div>
+							<div>
+								<label>Issue Date:</label> <input type="date"
+									class="form-control btn-sm" name="book_given_date" />
+							</div>
+							<div>
+								<label>Due Date:</label> <input type="date"
+									class="form-control btn-sm" name="book_return_date" />
+							</div>
+							<div class="text-center mt-2">
+								<button type="submit" class="btn btn-primary btn-sm">Return</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+
+
+		<script type="text/javascript" th:inline="javascript">
+			function setBookId(id) {
+				$("#borrow_book").val(id);
+				/* 	alert(id); */
+			}
+
+			function returnBookId(id) {
+				$("#return_book").val(id);
+			}
+
+			/* $('#given_model').on('show.bs.modal', function(e) {
+				var id = $(e.relatedTarget).data('book_id');
+			}) 
+			 */
+
+			/*  $(document).ready(function() {
+				
+				 $(document).on('click', '.edit', function() {
+					 var first = $('#book_id').text();
+					 
+					 $('#edit').modal('show');
+					 $('#book_id').val(first);
+					 
+				 });
+				 
+			 }); */
+
+			/* 
+			 $('document').ready(function() {
+				$('.btn').on('click', function(event) {
+					
+					event.preventDefault();
+					$('#edit').modal('show');
+					
+				})		
+			})  */
+		</script>
+
 	</section>
 
-	<script type="text/javascript">
-	alert("hi");
-		/* $('given_model').on('show.bs.modal', function(e) {
-			var id = $(e.relatedTarget).data('book_id');
-		}) */
-	</script>
+
 
 </body>
 </html>

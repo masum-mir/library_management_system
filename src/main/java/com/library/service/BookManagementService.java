@@ -10,6 +10,8 @@ public interface BookManagementService {
 	
 	BookManagement saveBookManagement(BookManagement book);
 	
+	BookManagement updateBookManagement(BookManagement book, int id);
+	
 	BookManagement findByBookManagementId(int id);
 	
 }

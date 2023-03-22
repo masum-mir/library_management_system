@@ -1,5 +1,6 @@
 package com.library.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +17,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class MyConfig{
 	
+//	@Autowired
+//	private JwtAuthenticationFilter jwtAuthFilter;
+	
 	@Bean
 	public UserDetailsService getDetailsService() {
 		return new UserDetailsServiceImpl();
@@ -25,7 +29,6 @@ public class MyConfig{
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
 	
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
@@ -73,6 +76,38 @@ public class MyConfig{
 		 */
 		return http.build();
 	}
+	
+//	@Bean
+//	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//		
+//		http
+//		.cors()
+//		.and()
+//		.csrf()
+//		.disable()
+//		.authorizeHttpRequests()
+//		.requestMatchers("/admin/**").hasRole("ADMIN")
+//		.requestMatchers("/user/**").hasRole("USER")
+//		.requestMatchers("/**")
+//		.permitAll().and().formLogin()
+//		.loginPage("/signin")
+//		.loginProcessingUrl("/dosignin2")
+//		.defaultSuccessUrl("/admin/dashboard")
+////		.and()
+////		.sessionManagement()
+////		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//		.and()
+//		.authenticationProvider(authenticationProvider());
+////		.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
+//		
+//		/*
+//		 * 		//.loginProcessingUrl("/dosignin")
+////		.defaultSuccessUrl("/normal/user_dashboard")
+////		.failureUrl("login-fail")
+//		 * .authenticated() .anyRequest()
+//		 */
+//		return http.build();
+//	}
 	
 	
 }

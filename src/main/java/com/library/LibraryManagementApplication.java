@@ -1,24 +1,20 @@
 package com.library;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import com.library.entity.Book;
-import com.library.entity.Category;
-import com.library.service.BookService;
 
 @SpringBootApplication
-@EnableJpaAuditing
+@EnableJpaRepositories
 public class LibraryManagementApplication {
 	
 	public static boolean isFactorOnly235(int num) {
 		while (num % 2 == 0) {
 			num /= 2;
-		}
+		} 
 		while (num % 3 == 0) {
 			num /= 3;
 		}

@@ -16,13 +16,13 @@
 		<div class="container mt-4">
 			<div class="row">
 				<div class="col-6 offset-3 mt-5">
-					<form th:action="@{/admin/book_update/{book_id}(book_id=${book.book_id})}" method="POST"
+					<form th:action="@{/admin/book_update/{bookId}(bookId=${book.bookId})}" method="POST"
 						th:object="${book}">
 
-						<input type="hidden" name="book_id" th:value="${book.book_id}" />
+						<input type="hidden" name="bookId" th:value="${book.bookId}" />
 						<div>
 							<label class="form-label">Book Name:</label> <input type="text"
-								name="book_name" th:value="${book.book_name}"
+								name="bookName" th:value="${book.bookName}"
 								class="form-control" />
 						</div>
 						<div>

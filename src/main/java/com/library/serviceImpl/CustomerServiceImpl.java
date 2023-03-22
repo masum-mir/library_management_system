@@ -29,4 +29,10 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerRepo.save(customers);
 	}
 
+	@Override
+	public List<Customers> findByCustomerIdContaining(long id) {
+		List<Customers> customer = customerRepo.findByCustomerIdContaining(id);
+		return customer;
+	}
+
 }
