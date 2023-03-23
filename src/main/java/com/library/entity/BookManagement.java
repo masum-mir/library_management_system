@@ -42,21 +42,19 @@ public class BookManagement{
 	private String book_condition_during_return;
 	private String type;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
 	@JsonManagedReference
 	private TxDetails tx_details;
 	
 	
-	/*  
-	  @ManyToOne
-	  @JoinColumn(name="customerId") 
-	  private Customers customer_details;
+//	  @ManyToOne
+//	  @JoinColumn(name="customerId") 
+//	  private Customers customer_details;
+//	  
+//	  @ManyToOne 
+//	  private Book books;
 	  
-	  @ManyToOne 
-	  private Book books;
-	  
-	 */
-	
+	 
 
 	public BookMovementStatus getBook_movement_status() {
 		return book_movement_status;
@@ -98,15 +96,17 @@ public class BookManagement{
 		this.book_condition_during_return = book_condition_during_return;
 	}
 	
-//	  public Book getBooks() { return books; }
-//	  
-//	  public void setBooks(Book books) { this.books = books; }
-//	  
-//	  public Customers getCustomer_details() { return customer_details; }
-//	  
-//	  public void setCustomer_details(Customers customer_details) {
-//	  this.customer_details = customer_details; }
-//	 
+	/*
+	 * public Book getBooks() { return books; }
+	 * 
+	 * public void setBooks(Book books) { this.books = books; }
+	 * 
+	 * public Customers getCustomer_details() { return customer_details; }
+	 * 
+	 * public void setCustomer_details(Customers customer_details) {
+	 * this.customer_details = customer_details; }
+	 */
+	 
 
 	public String getType() {
 		return type;

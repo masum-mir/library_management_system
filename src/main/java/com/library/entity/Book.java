@@ -44,10 +44,10 @@ public class Book extends BaseModel {
 			@JoinColumn(name = "author_id") })
 	private Set<Author> authors = new HashSet<Author>();
 
-	@OneToOne(mappedBy = "books", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "books")
 	@JsonBackReference
 //	private List<BookManagement> book_management;
-	private TxDetails tx_Details;
+	private List<TxDetails> tx_Details;
 
 	public String getBookName() {
 		return bookName;
@@ -116,11 +116,11 @@ public class Book extends BaseModel {
 	public Book() {
 	}
 
-	public TxDetails getTx_Details() {
+	public List<TxDetails> getTx_Details() {
 		return tx_Details;
 	}
 
-	public void setTx_Details(TxDetails tx_Details) {
+	public void setTx_Details(List<TxDetails> tx_Details) {
 		this.tx_Details = tx_Details;
 	}
 

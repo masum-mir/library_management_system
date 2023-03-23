@@ -151,7 +151,7 @@ public class HomeController {
 		return new ResponseEntity<List<Customers>>(customer, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/customer/save", method = RequestMethod.POST , consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/customer/save", method = RequestMethod.POST , produces = "application/json")
 	public ResponseEntity<Customers> saveCustomer(@RequestBody Customers customers) {
 
 		Customers save = customerService.createCustomer(customers);

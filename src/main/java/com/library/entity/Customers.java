@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,11 +37,10 @@ public class Customers {
 	@JsonManagedReference
 	private RegistrationDetails registration_details;
 	
-	@OneToOne(mappedBy = "customer_details", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "customer_details")
 	@JsonBackReference
 //	private List<BookManagement> bookManagement;
-	private TxDetails tx_details;
-
+	private List<TxDetails > tx_details;
 	
 	public Long getCustomerId() {
 		return customerId;
@@ -106,11 +106,11 @@ public class Customers {
 		this.registration_details = registration_details;
 	}
 
-	public TxDetails getTx_details() {
+	public List<TxDetails> getTx_details() {
 		return tx_details;
 	}
 
-	public void setTx_details(TxDetails tx_details) {
+	public void setTx_details(List<TxDetails> tx_details) {
 		this.tx_details = tx_details;
 	}
 	
